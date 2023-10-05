@@ -46,20 +46,18 @@ func handle_wall_jump():
 	var wall_normal = get_wall_normal()
 	if wall_jump_timer.time_left > 0.0:
 		wall_normal = was_wall_normal
-	if Input.is_action_just_pressed("ui_jump"):
+	if Input.is_action_pressed("ui_jump"):
 		velocity.x = wall_normal.x * 1.5 * movement_data.speed
 		velocity.y = movement_data.jump_velocity
 		just_wall_jumped = true
-#	if Input.is_action_just_pressed("ui_jump") and wall_normal == Vector2.RIGHT:
-#		velocity.x = wall_normal.x * movement_data.speed
-#		velocity.y = movement_data.jump_velocity
 
 func handle_jump():
 	if is_on_floor(): air_jump = true
 	
 	if is_on_floor() or coyote_jump_timer.time_left > 0.0:
-		if Input.is_action_just_pressed("ui_jump"):
+		if Input.is_action_pressed("ui_jump"):
 			velocity.y = movement_data.jump_velocity
+			coyote_jump_timer.stop()
 	elif not is_on_floor():
 		if Input.is_action_just_released("ui_jump") and velocity.y < movement_data.jump_velocity / 2:
 			velocity.y = movement_data.jump_velocity / 2
